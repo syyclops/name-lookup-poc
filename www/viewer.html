@@ -14,11 +14,21 @@
     <!-- Autodesk Forge Viewer files (IMPORTANT) -->
     <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css" type="text/css">
     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
+    <script src="viewerpoc.js"></script>
     <style>
         /** Just simple CSS styling to make this page a little nicer **/
         body {
             margin: 0;
             padding: 0;
+        }
+
+        .searchinp {
+            z-index: 100000;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            padding: 0.5;
+            em;
         }
     </style>
 </head>
@@ -27,6 +37,8 @@
     <!-- The Viewer will be instantiated here -->
     <div id="MyViewerDiv"></div>
     <!-- Custom script -->
+
+    <div id="searchbar"><input type="text" size="25" class="searchinp" onchange="searchModels(this.value)" /></div>
     <script>
         var viewer;
         var options = {
@@ -35,6 +47,8 @@
             getAccessToken: getForgeToken
         };
         var documentId = 'urn:' + getUrlParameter('urn');
+
+
 
         // Run this when the page is loaded
         Autodesk.Viewing.Initializer(options, function onInitialized(){
@@ -46,6 +60,7 @@
                 viewer.start();
                 // Load the document into the viewer.
                 Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
+
             }
         });
 
@@ -61,6 +76,7 @@
             if (viewable) {
                 viewer.loadDocumentNode(doc, viewable).then(function(result) {
                     console.log('Viewable Loaded!');
+
                 }).catch(function(err) {
                     console.log('Viewable failed to load.');
                     console.log(err);
@@ -96,7 +112,9 @@
                 }
             });
         }
-        
+
+
+
   </script>
 </body>
 
